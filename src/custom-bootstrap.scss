@@ -1,0 +1,9 @@
+// src/styles/custom-bootstrap.scss
+
+// Define custom color variables
+$body-bg: #F4EBDC;  // Base color
+$primary: #3A506B;
+$secondary: #D8C3A5;
+
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap";

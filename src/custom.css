@@ -1,0 +1,25 @@
+/* Override the body background */
+body {
+    background-color: #F4EBDC !important;
+}
+  
+/* Override the primary button color */
+.btn-primary {
+    background-color: #3A506B !important;
+    border-color: #3A506B !important;
+}
+  
+/* Override the secondary button color */
+.btn-secondary {
+    background-color: #D8C3A5 !important;
+    border-color: #D8C3A5 !important;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #3A506B !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: white !important;
+}
