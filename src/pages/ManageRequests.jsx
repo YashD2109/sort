@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { 
   Inbox as InboxIcon,
@@ -8,6 +8,7 @@ import {
   Trash2,
   AlertCircle
 } from 'lucide-react';
+// import axios from 'axios'; // Uncomment when using API
 
 const mockRequests = [
   {
@@ -71,17 +72,30 @@ const RequestList = ({ requests, type }) => {
 const ManageRequests = () => {
   const location = useLocation();
   const currentPath = location.pathname.split('/').pop() || 'inbox';
+  const [requests, setRequests] = useState(mockRequests); // Default mock
+
+  // useEffect(() => {
+  //   const fetchRequests = async () => {
+  //     try {
+  //       const response = await axios.get('https://api.example.com/requests'); // Replace with your API URL
+  //       setRequests(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching requests:', error);
+  //     }
+  //   };
+  //   fetchRequests();
+  // }, []);
 
   return (
     <div className="max-w-4xl mx-auto">
       <Routes>
-        <Route path="/" element={<RequestList requests={mockRequests} type="inbox" />} />
-        <Route path="inbox" element={<RequestList requests={mockRequests.filter(r => !r.isStarred)} type="inbox" />} />
-        <Route path="starred" element={<RequestList requests={mockRequests.filter(r => r.isStarred)} type="starred" />} />
-        <Route path="sent" element={<RequestList requests={mockRequests} type="sent" />} />
-        <Route path="drafts" element={<RequestList requests={mockRequests} type="drafts" />} />
+        <Route path="/" element={<RequestList requests={requests} type="inbox" />} />
+        <Route path="inbox" element={<RequestList requests={requests.filter(r => !r.isStarred)} type="inbox" />} />
+        <Route path="starred" element={<RequestList requests={requests.filter(r => r.isStarred)} type="starred" />} />
+        <Route path="sent" element={<RequestList requests={requests} type="sent" />} />
+        <Route path="drafts" element={<RequestList requests={requests} type="drafts" />} />
         <Route path="trash" element={<RequestList requests={[]} type="trash" />} />
-        <Route path="important" element={<RequestList requests={mockRequests.filter(r => r.isImportant)} type="important" />} />
+        <Route path="important" element={<RequestList requests={requests.filter(r => r.isImportant)} type="important" />} />
       </Routes>
     </div>
   );

@@ -7,10 +7,30 @@ const PaymentGateway = ({ billData }) => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
-    // Simulate payment processing
     setPaymentStatus('processing');
+
+    // Simulated API Call for payment processing
+    // try {
+    //   const response = await fetch('/api/payment', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({
+    //       method: paymentMethod,
+    //       amount: billData.total
+    //     }),
+    //   });
+    //   const result = await response.json();
+    //   if (result.status === 'success') {
+    //     setPaymentStatus('success');
+    //   } else {
+    //     setPaymentStatus('failed');
+    //   }
+    // } catch (error) {
+    //   setPaymentStatus('failed');
+    // }
+
     setTimeout(() => {
-      setPaymentStatus('success');
+      setPaymentStatus('success'); // remove this line when using real API
     }, 2000);
   };
 
@@ -71,37 +91,17 @@ const PaymentGateway = ({ billData }) => {
 
           {paymentMethod === 'card' && (
             <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Card Number"
-                className="input-field"
-                required
-              />
+              <input type="text" placeholder="Card Number" className="input-field" required />
               <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="MM/YY"
-                  className="input-field"
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="CVV"
-                  className="input-field"
-                  required
-                />
+                <input type="text" placeholder="MM/YY" className="input-field" required />
+                <input type="text" placeholder="CVV" className="input-field" required />
               </div>
             </div>
           )}
 
           {paymentMethod === 'upi' && (
             <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="UPI ID"
-                className="input-field"
-                required
-              />
+              <input type="text" placeholder="UPI ID" className="input-field" required />
             </div>
           )}
 

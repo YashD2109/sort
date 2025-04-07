@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MapPin, Phone, Mail, Star, Users, Calendar } from 'lucide-react';
 
@@ -12,20 +12,8 @@ const mockHospital = {
   rating: 4.5,
   reviews: 128,
   image: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&q=80&w=1200',
-  specialties: [
-    'Cardiology',
-    'Neurology',
-    'Oncology',
-    'Orthopedics',
-    'Pediatrics'
-  ],
-  facilities: [
-    'Emergency Department',
-    'ICU',
-    'Operation Theaters',
-    'Diagnostic Center',
-    'Pharmacy'
-  ],
+  specialties: ['Cardiology', 'Neurology', 'Oncology', 'Orthopedics', 'Pediatrics'],
+  facilities: ['Emergency Department', 'ICU', 'Operation Theaters', 'Diagnostic Center', 'Pharmacy'],
   doctors: [
     {
       name: 'Dr. Sarah Johnson',
@@ -44,6 +32,35 @@ const HospitalDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // const [hospitalData, setHospitalData] = useState(null); // For API Data
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchHospital = async () => {
+  //     try {
+  //       const response = await fetch(`https://your-api-url.com/hospitals/${id}`);
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch hospital data');
+  //       }
+  //       const data = await response.json();
+  //       setHospitalData(data);
+  //     } catch (err) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchHospital();
+  // }, [id]);
+
+  // if (loading) return <div>Loading hospital details...</div>;
+  // if (error) return <div>Error: {error}</div>;
+
+  // const hospital = hospitalData || mockHospital;
+  const hospital = mockHospital;
+
   const handleCollaborate = () => {
     navigate(`/hospitals/${id}/collaborate`);
   };
@@ -51,23 +68,19 @@ const HospitalDetails = () => {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="relative h-96 mb-8 rounded-xl overflow-hidden">
-        <img
-          src={mockHospital.image}
-          alt={mockHospital.name}
-          className="w-full h-full object-cover"
-        />
+        <img src={hospital.image} alt={hospital.name} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <div className="absolute bottom-0 left-0 p-8 text-white">
-          <h1 className="text-4xl font-bold mb-2">{mockHospital.name}</h1>
+          <h1 className="text-4xl font-bold mb-2">{hospital.name}</h1>
           <div className="flex items-center gap-4">
             <div className="flex items-center">
               <Star className="w-5 h-5 text-yellow-400 fill-current" />
-              <span className="ml-1">{mockHospital.rating}</span>
-              <span className="ml-1 text-sm">({mockHospital.reviews} reviews)</span>
+              <span className="ml-1">{hospital.rating}</span>
+              <span className="ml-1 text-sm">({hospital.reviews} reviews)</span>
             </div>
             <div className="flex items-center">
               <MapPin className="w-5 h-5" />
-              <span className="ml-1">{mockHospital.address}</span>
+              <span className="ml-1">{hospital.address}</span>
             </div>
           </div>
         </div>
@@ -77,13 +90,13 @@ const HospitalDetails = () => {
         <div className="lg:col-span-2 space-y-8">
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-2xl font-semibold text-primary mb-4">About</h2>
-            <p className="text-gray-600">{mockHospital.description}</p>
+            <p className="text-gray-600">{hospital.description}</p>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-2xl font-semibold text-primary mb-4">Specialties</h2>
             <div className="grid grid-cols-2 gap-4">
-              {mockHospital.specialties.map((specialty, index) => (
+              {hospital.specialties.map((specialty, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-primary rounded-full" />
                   <span>{specialty}</span>
@@ -95,7 +108,7 @@ const HospitalDetails = () => {
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-2xl font-semibold text-primary mb-4">Facilities</h2>
             <div className="grid grid-cols-2 gap-4">
-              {mockHospital.facilities.map((facility, index) => (
+              {hospital.facilities.map((facility, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-primary rounded-full" />
                   <span>{facility}</span>
@@ -107,13 +120,9 @@ const HospitalDetails = () => {
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-2xl font-semibold text-primary mb-4">Key Doctors</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {mockHospital.doctors.map((doctor, index) => (
+              {hospital.doctors.map((doctor, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <img
-                    src={doctor.image}
-                    alt={doctor.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
+                  <img src={doctor.image} alt={doctor.name} className="w-16 h-16 rounded-full object-cover" />
                   <div>
                     <h3 className="font-semibold">{doctor.name}</h3>
                     <p className="text-gray-600">{doctor.specialty}</p>
@@ -130,15 +139,15 @@ const HospitalDetails = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary" />
-                <span>{mockHospital.phone}</span>
+                <span>{hospital.phone}</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary" />
-                <span>{mockHospital.email}</span>
+                <span>{hospital.email}</span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span>{mockHospital.address}</span>
+                <span>{hospital.address}</span>
               </div>
             </div>
           </div>
