@@ -259,7 +259,7 @@ const AmbulanceDispatch = () => {
         name="requested_by"
         onChange={handleDispatchInputChange}
         style={{
-          width: "100%",
+          width: "30%",
           padding: "10px",
           backgroundColor: "#fff",
           border: "1px solid #C8B6A6", // Dusty Rose Beige
@@ -269,26 +269,7 @@ const AmbulanceDispatch = () => {
       />
     </div>
 
-    <div style={{ flex: 1, marginLeft: "15px" }}>
-      <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Ambulance Availability:</label>
-      <select
-        name="ambulance_availability"
-        onChange={handleDispatchInputChange}
-        style={{
-          width: "100%",
-          padding: "10px",
-          backgroundColor: "#fff",
-          border: "1px solid #C8B6A6", // Dusty Rose Beige
-          borderRadius: "5px",
-          fontSize: "16px",
-        }}
-      >
-        <option value="">Select Availability</option>
-        <option value="true">Available</option>
-        <option value="false">Not Available</option>
-      </select>
     </div>
-  </div>
 
   <div style={{ textAlign: "center", marginBottom: "20px" }}>
     <button

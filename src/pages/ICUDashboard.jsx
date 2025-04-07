@@ -7,6 +7,7 @@ import {
   YAxis,
   Tooltip
 } from "recharts";
+import { FaUserPlus } from "react-icons/fa";
 
 // Dummy patient data
 const dummyVitals = [
@@ -56,7 +57,7 @@ const dummyVitals = [
   }
 ];
 
-// Vitals card with chart
+// Patient detail report component
 const PatientReport = ({ vital, onBack }) => {
   const chartData = [
     { name: "HR", value: vital.heart_rate },
@@ -98,9 +99,16 @@ const PatientReport = ({ vital, onBack }) => {
   );
 };
 
-// Home screen grouped by alert level
+// Main Dashboard
 const ICUDashboard = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    patient_id: "",
+    emergency_type: "",
+    doctor_specialization_required: "",
+    hospital_id: ""
+  });
 
   const categorized = {
     Critical: dummyVitals.filter(p => p.alert_level === "Critical"),
@@ -108,12 +116,28 @@ const ICUDashboard = () => {
     Stable: dummyVitals.filter(p => p.alert_level === "Stable")
   };
 
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    alert("Form submitted:\n" + JSON.stringify(formData, null, 2));
+    setShowForm(false);
+    setFormData({
+      patient_id: "",
+      emergency_type: "",
+      doctor_specialization_required: "",
+      hospital_id: ""
+    });
+  };
+
   if (selectedPatient) {
     return <PatientReport vital={selectedPatient} onBack={() => setSelectedPatient(null)} />;
   }
 
   return (
-    <div className="min-h-screen bg-[#F4EBDC] p-6">
+    <div className="min-h-screen bg-[#F4EBDC] p-6 relative">
       <h1 className="text-3xl font-bold text-center text-[#2B2A4C] mb-6">
         ICU Patient List
       </h1>
@@ -132,8 +156,7 @@ const ICUDashboard = () => {
                 key={patient.patient_id}
                 onClick={() => setSelectedPatient(patient)}
                 className="cursor-pointer bg-white rounded-2xl shadow-md p-4 border-t-4 
-                  transition hover:shadow-xl
-                  border-[#2B2A4C]"
+                  transition hover:shadow-xl border-[#2B2A4C]"
               >
                 <h3 className="text-lg font-bold text-[#2B2A4C] mb-1">
                   {patient.name}
@@ -141,34 +164,20 @@ const ICUDashboard = () => {
                 <p className="text-sm text-gray-500 mb-2">ID: {patient.patient_id}</p>
 
                 <div className="text-sm">
-                  <p>
-                    <span className="font-semibold text-gray-700">Oxygen:</span>{" "}
-                    {patient.oxygen_level}%
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-700">Heart Rate:</span>{" "}
-                    {patient.heart_rate} bpm
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-700">BP:</span>{" "}
-                    {patient.blood_pressure}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-700">Temp:</span>{" "}
-                    {patient.temperature}°C
-                  </p>
+                  <p><span className="font-semibold text-gray-700">Oxygen:</span> {patient.oxygen_level}%</p>
+                  <p><span className="font-semibold text-gray-700">Heart Rate:</span> {patient.heart_rate} bpm</p>
+                  <p><span className="font-semibold text-gray-700">BP:</span> {patient.blood_pressure}</p>
+                  <p><span className="font-semibold text-gray-700">Temp:</span> {patient.temperature}°C</p>
                 </div>
 
                 <div className="mt-3">
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full font-semibold ${
-                      patient.alert_level === "Critical"
-                        ? "bg-red-100 text-red-600"
-                        : patient.alert_level === "Serious"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-green-100 text-green-700"
-                    }`}
-                  >
+                  <span className={`text-xs px-2 py-1 rounded-full font-semibold ${
+                    patient.alert_level === "Critical"
+                      ? "bg-red-100 text-red-600"
+                      : patient.alert_level === "Serious"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-green-100 text-green-700"
+                  }`}>
                     {patient.alert_level}
                   </span>
                 </div>
@@ -177,6 +186,80 @@ const ICUDashboard = () => {
           </div>
         </div>
       ))}
+
+      {/* Floating Button */}
+      <button
+        onClick={() => setShowForm(true)}
+        className="fixed bottom-6 right-6 bg-[#2B2A4C] text-white p-4 rounded-full shadow-lg hover:bg-[#3E3D65] transition"
+      >
+        <FaUserPlus size={24} />
+      </button>
+
+      {/* Pop-up Form */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-lg border-2 border-[#2B2A4C]">
+            <h2 className="text-xl font-bold text-[#2B2A4C] mb-4">Add New Patient</h2>
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+              <input
+                type="text"
+                name="patient_id"
+                placeholder="Patient ID"
+                value={formData.patient_id}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 p-2 rounded-md"
+                required
+              />
+             
+              <select
+  name="emergency_type"
+  value={formData.emergency_type}
+  onChange={handleInputChange}
+  className="w-full p-2 border rounded"
+>
+  <option value="">Select Emergency Type</option>
+  <option value="Critical">Critical</option>
+  <option value="Serious">Serious</option>
+  <option value="Stable">Stable</option>
+</select>
+
+              <input
+                type="text"
+                name="doctor_specialization_required"
+                placeholder="Required Specialization"
+                value={formData.doctor_specialization_required}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 p-2 rounded-md"
+                required
+              />
+              <input
+                type="text"
+                name="hospital_id"
+                placeholder="Hospital ID"
+                value={formData.hospital_id}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 p-2 rounded-md"
+                required
+              />
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowForm(false)}
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-[#2B2A4C] text-white px-4 py-2 rounded-md hover:bg-[#3E3D65]"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

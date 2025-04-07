@@ -51,9 +51,7 @@ const EmergencyDoctor = () => {
               <p className="font-semibold mt-2 text-[#3A506B]">{doc.name}</p> {/* Deep Steel Blue */}
               <p className="text-sm text-[#6C757D]">{doc.specialization}</p> {/* Muted Gray */}
               {/* Button to view doctor details */}
-              <button className="mt-4 bg-[#3A506B] text-white px-4 py-2 rounded-lg hover:bg-[#32455B] transition">
-                View Details
-              </button>
+             
             </div>
           ))}
         </div>
@@ -70,7 +68,8 @@ const EmergencyDoctor = () => {
               onChange={(e) => setPatientId(e.target.value)}
               required
             />
-            <input
+          {/* Emergency Type Dropdown */}
+          <input
               type="text"
               placeholder="Emergency Type"
               className="p-3 border border-[#6C757D] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3A506B] w-full"
@@ -78,14 +77,29 @@ const EmergencyDoctor = () => {
               onChange={(e) => setEmergencyType(e.target.value)}
               required
             />
-            <input
-              type="text"
-              placeholder="Doctor Specialization Required"
-              className="p-3 border border-[#6C757D] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3A506B] w-full"
-              value={doctorSpecialization}
-              onChange={(e) => setDoctorSpecialization(e.target.value)}
-              required
-            />
+           
+
+{/* Doctor Specialization Dropdown */}
+<select
+  className="p-3 border border-[#6C757D] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3A506B] w-full mt-4"
+  value={doctorSpecialization}
+  onChange={(e) => setDoctorSpecialization(e.target.value)}
+  required
+>
+  <option value="">Select Doctor Specialization</option>
+  <option value="Cardiologist">Cardiologist</option>
+  <option value="Neurologist">Neurologist</option>
+  <option value="Pulmonologist">Pulmonologist</option>
+  <option value="General Physician">General Physician</option>
+  <option value="Orthopedic">Orthopedic</option>
+  <option value="Pediatrician">Pediatrician</option>
+  <option value="Dermatologist">Dermatologist</option>
+  <option value="Gynecologist">Gynecologist</option>
+  <option value="Oncologist">Oncologist</option>
+  <option value="Psychiatrist">Psychiatrist</option>
+  <option value="ENT Specialist">ENT Specialist</option>
+</select>
+
             <input
               type="text"
               placeholder="Hospital ID"
