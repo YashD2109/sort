@@ -31,6 +31,10 @@ import ResearchInterface from './pages/ResearchInterface';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.css'; // Import custom styles
 import './custom-bootstrap.scss';
+import AmbulanceDispatch from './pages/AmbulanceUI';
+import ICUDashboard from './pages/ICUDashboard';
+import EmergencyDoctor from './pages/EmergencyDoctor';
+import Doctor from './pages/Doctor/Doctor';
 
 
 function App() {
@@ -74,6 +78,10 @@ function App() {
               <Route path="/risk-prediction" element={<RiskPrediction />} />
           <Route path="/operations" element={<OperationsDashboard />} />
           <Route path="/research" element={<ResearchInterface />} />
+          <Route path="/AmbulanceUI" element={<AmbulanceDispatch/>}/>
+          <Route path="/ICU" element={<ICUDashboard/>}/>
+          <Route path='/emergency-case' element={<EmergencyDoctor/>}/>
+          <Route path='/support' element={<Doctor/>}/>
 
               <Route path="*" element={<Navigate to="/" />} />
 

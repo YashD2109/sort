@@ -22,7 +22,10 @@ import {
   Users,
   Calendar,
   Stethoscope,
-  // Removed FileMedical, as it's not available
+  Siren,
+  HeartPulse,
+  Route,
+  MessageSquareText,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -69,11 +72,16 @@ const Sidebar = ({ isOpen, onClose }) => {
     { icon: Users, label: 'Patient Management', path: '/patients' },
     { icon: Calendar, label: 'Appointments', path: '/appointments' },
     { icon: Stethoscope, label: 'Patient Visits', path: '/visits' },
-    /* Replaced FileMedical with another icon */
-    { icon: Shield, label: 'EHR Management', path: '/ehr' } ,
+    { icon: Shield, label: 'EHR Management', path: '/ehr' },
     { icon: TrendingUp, label: 'Risk Prediction', path: '/risk-prediction' },
     { icon: DollarSign, label: 'Operations Dashboard', path: '/operations' },
-    { icon: FileText, label: 'Research Interface', path: '/research' }
+    { icon: FileText, label: 'Research Interface', path: '/research' },
+
+    // 🚨 New Buttons
+    { icon: Siren, label: 'Ambulance Dispatch', path: '/AmbulanceUI' },
+    { icon: HeartPulse, label: 'ICU Monitoring Dashboard', path: '/ICU' },
+    { icon: Route, label: 'Emergency Case Routing', path: '/emergency-case' },
+    { icon: MessageSquareText, label: 'Communication & Support', path: '/support' },
   ];
 
   return (
