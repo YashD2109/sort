@@ -86,13 +86,7 @@ const EHRManagement = () => {
           <button type="button" className="btn btn-primary" onClick={handleFetchEHR}>Fetch EHR</button>
         </div>
       </form>
-      {responseMessage && <div className="alert alert-info">{responseMessage}</div>}
-      {fetchedEhr && (
-        <div className="mt-4">
-          <h5>Fetched EHR:</h5>
-          <pre>{JSON.stringify(fetchedEhr, null, 2)}</pre>
-        </div>
-      )}
+     
     </div>
   );
 };
