@@ -131,13 +131,19 @@ const Inventory = () => {
                 <td>{medicine.id}</td>
                 <td>{medicine.batchName}</td>
                 <td className={medicine.stockQuantity < 5 ? 'text-red-500' : ''}>{medicine.stockQuantity}</td>
-                <td className="flex justify-center space-x-2">
-                  <button onClick={handleEdit} className="text-green-500"><Edit size={20} /></button>
-                  <button onClick={() => handleDelete(medicine.id)} className="text-purple-500"><Trash2 size={20} /></button>
-                  {medicine.stockQuantity < 5 && (
-                    <button onClick={() => openRefillPopup(medicine)} className="text-red-600"><PlusCircle size={20} /></button>
-                  )}
-                </td>
+                <td className="text-center align-middle ">
+                 <div className="w-full flex flex-row items-center justify-center ">
+                   <button onClick={handleEdit} className="text-green-500"><Edit size={20} /></button>
+                   <button onClick={() => handleDelete(medicine.id)} className="text-purple-500"><Trash2 size={20} /></button>
+                   {medicine.stockQuantity < 5 && (
+                     <button onClick={() => openRefillPopup(medicine)} className="text-red-600"><PlusCircle size={20} /></button>
+                   )}
+                   {/* Invisible button to preserve spacing if only 2 buttons */}
+                   {medicine.stockQuantity >= 5 && (
+                     <div className="h-[24px] opacity-0"><PlusCircle size={20} /></div>
+                   )}
+                 </div>
+               </td>
               </tr>
             ))}
           </tbody>
